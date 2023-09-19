@@ -11,6 +11,8 @@ module SlackApi
     def create_channel(user_id, channel_name, is_private=nil, team_id=nil)
       response = @client.conversations_create(name: channel_name, is_private: is_private, team_id: team_id)
       @client.conversations_invite(channel: response['channel']['id'], users: user_id)
+
+      return response['channel']['id']
     end
   end
 end

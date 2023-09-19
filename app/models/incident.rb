@@ -6,4 +6,8 @@ class Incident < ApplicationRecord
     sev1: 1,
     sev2: 2
   }
+  enum state: {
+    in_progress: 0,
+    resolved: 1
+  }
 end
