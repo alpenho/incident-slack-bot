@@ -1,7 +1,10 @@
 class RootliesController < ApplicationController
+  include RootliesHelper
+
   skip_before_action :verify_authenticity_token
 
-  PARAMETER_INCIDENT_REGEX = /<(.*?)>/
+  DECLARE_REGEX = /^declare(\s+|)/
+  RESOLVE_REGEX = /^resolve(\s+|)/
 
   # POST /rootly
   def rootly
@@ -9,8 +12,15 @@ class RootliesController < ApplicationController
       text: 'success'
     }
     check_token_slack!
-    incident_parameters = get_params
-    payload[:text] = "title #{incident_parameters[0]}, description #{incident_parameters[1]}, severity #{incident_parameters[2]}"
+
+    text_param = request.params['text']
+    if is_declare?(text_param)
+      declare!(text_param)
+    elsif is_resolve?(text_param)
+      resolve!
+    else
+      raise 'Wrong command or wrong format'
+    end
     render json: payload, status: 200
   rescue => e
     payload[:text] = e.message
@@ -23,7 +33,11 @@ class RootliesController < ApplicationController
     raise 'the application is not authorized!' unless request.params['token'] == ENV['SLACK_TOKEN']
   end
 
-  def get_params
-    request.params['text'].scan(PARAMETER_INCIDENT_REGEX).flatten
+  def is_declare?(text_param)
+    text_param.match(DECLARE_REGEX).present?
+  end
+
+  def is_resolve?(text_param)
+    text_param.match(RESOLVE_REGEX).present?
   end
 end
