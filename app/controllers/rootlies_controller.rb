@@ -13,9 +13,10 @@ class RootliesController < ApplicationController
     }
     check_token_slack!
 
+    user_id = request.params['user_id']
     text_param = request.params['text']
     if is_declare?(text_param)
-      declare!(text_param)
+      declare!(user_id, text_param)
     elsif is_resolve?(text_param)
       resolve!
     else
