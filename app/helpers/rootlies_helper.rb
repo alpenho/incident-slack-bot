@@ -7,11 +7,11 @@ module RootliesHelper
     incident = ::Incident.new(
       title: incident_params[0],
       description: incident_params[1],
-      severity: incident_params[2]
+      severity: incident_params[2],
+      slack_channel_id: 'channel_id_placeholder'
     )
-    channel_id = ::SlackApi::Client.new.create_channel(user_id, "incident-#{incident_params[0]}")
-    incident.slack_channel_id = channel_id
     incident.save!
+    ::CreateSlackChannelJob.perform_later(user_id, incident.id, incident.title)
   rescue => e
     puts e
     raise "There is an error when declaring incident"

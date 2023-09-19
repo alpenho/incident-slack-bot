@@ -1,3 +1,4 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
   resources :incidents
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -6,4 +7,5 @@ Rails.application.routes.draw do
   # root "articles#index"
   root 'incidents#index'
   post '/rootly', :to => 'rootlies#rootly'
+  mount Sidekiq::Web => '/sidekiq'
 end

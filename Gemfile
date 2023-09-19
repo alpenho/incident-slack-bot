@@ -49,6 +49,7 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 gem 'slack-ruby-client'
+gem 'sidekiq'
 
 group :development, :test do
   gem 'pry-rails', '~> 0.3.4'
