@@ -17,7 +17,7 @@ class RootliesController < ApplicationController
     if is_declare?(text_param)
       declare!(request.params['user_id'], text_param)
     elsif is_resolve?(text_param)
-      resolve!
+      resolve!(request.params['channel_id'])
     else
       raise 'Wrong command or wrong format'
     end
