@@ -1,0 +1,61 @@
+databases:
+  - name: incident-postgresql
+    databaseName: incident_slack_bot_production
+    user: incident_slack_bot
+
+services:
+  # Create a redis instance
+  - type: redis
+    name: sidekiq-redis
+    region: ohio
+    maxmemoryPolicy: noeviction
+    ipAllowList: []
+    plan: free # optional (defaults to starter)
+  - type: worker
+    name: sidekiq-worker
+    env: ruby
+    region: ohio
+    buildCommand: bundle install
+    startCommand: bundle exec sidekiq
+    autoDeploy: false
+    envVars:
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: sidekiq-redis
+          property: connectionString
+  - type: web
+    name: incident-web
+    runtime: ruby
+    buildCommand: bundle install
+    startCommand: "./bin/rails server"
+    envVars:
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: mysite
+          property: host
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: mysite
+          property: database
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: mysite
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: mysite
+          property: password
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: sidekiq-redis
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: RAILS_ENV
+        sync: false
+      - key: SLACK_TOKEN
+        sync: false
+      - key: SLACK_OAUTH_TOKEN
+        sync: false
