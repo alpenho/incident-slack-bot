@@ -8,18 +8,18 @@ class RootliesController < ApplicationController
 
   # POST /rootly
   def rootly
-    payload = {
-      text: 'success'
-    }
+    payload = { text: '' }
     check_token_slack!
 
     text_param = request.params['text']
     if is_declare?(text_param)
       declare!(request.params['user_id'], text_param)
+      payload[:text] = 'Incident data is already being added, please wait for the channel creation'
     elsif is_resolve?(text_param)
-      resolve!(request.params['channel_id'])
+      incident = resolve!(request.params['channel_id'])
+      payload[:text] = "Incident is already flagged as resolved, it takes #{time_difference_in_string(incident.created_at, incident.resolved_at)}"
     else
-      raise 'Wrong command or wrong format'
+      payload[:text] = 'Wrong command or wrong format'
     end
     render json: payload, status: 200
   rescue => e

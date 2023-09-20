@@ -23,5 +23,20 @@ module RootliesHelper
     raise "This channel is not related to any of the incidents that still active" if incident.nil?
 
     incident.update!(state: 'resolved', resolved_at: Time.now)
+    incident
+  end
+
+  def time_difference_in_string(start_time, end_time)
+    seconds_diff = end_time - start_time
+
+    hours = (seconds_diff / 3600).to_i
+    seconds_diff -= hours * 3600
+
+    minutes = (seconds_diff / 60).to_i
+    seconds_diff -= minutes * 60
+
+    seconds = seconds_diff.to_i
+
+    "#{hours} Hours, #{minutes} Minutes and #{seconds} Seconds"
   end
 end
