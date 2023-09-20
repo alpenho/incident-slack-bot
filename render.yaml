@@ -32,19 +32,19 @@ services:
     envVars:
       - key: POSTGRES_HOST
         fromDatabase:
-          name: mysite
+          name: incident-postgresql
           property: host
       - key: POSTGRES_DB
         fromDatabase:
-          name: mysite
+          name: incident-postgresql
           property: database
       - key: POSTGRES_USER
         fromDatabase:
-          name: mysite
+          name: incident-postgresql
           property: user
       - key: POSTGRES_PASSWORD
         fromDatabase:
-          name: mysite
+          name: incident-postgresql
           property: password
       - key: REDIS_URL
         fromService:
