@@ -2,13 +2,8 @@
 
 <h1>Incidents</h1>
 
-<div id="incidents">
-  <% @incidents.each do |incident| %>
-    <%= render incident %>
-    <p>
-      <%= link_to "Show this incident", incident %>
-    </p>
-  <% end %>
+<div class="max-w-7xl mx-auto mt-12">
+  <%= render "incidents", incidents: @incidents %>
 </div>
 
 <%= link_to "New incident", new_incident_path %>
