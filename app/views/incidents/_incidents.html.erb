@@ -1,21 +1,36 @@
-<div class="shadow overflow-hidden rounded border-b border-gray-200">
+<%= turbo_frame_tag "incidents", class: "shadow overflow-hidden rounded border-b border-gray-200" do %>
   <table class="min-w-full bg-white">
     <thead class="bg-gray-800 text-white">
       <tr>
         <th id="incident-title" class="text-left py-3 px-6 uppercase font-semibold text-sm hover:cursor-pointer">
-          <span>Title</span>
+          <div class='table-header'>
+            <%= sort_indicator if params[:column] == "title" %>
+            <%= sort_link(column: "title", label: "Title") %>
+          </div>
         </th>
         <th id="incident-severity" class="text-left py-3 px-6 uppercase font-semibold text-sm hover:cursor-pointer">
-          <span>Severity</span>
+          <div class='table-header'>
+            <%= sort_indicator if params[:column] == "severity" %>
+            <%= sort_link(column: "severity", label: "Severity") %>
+          </div>
         </th>
         <th id="incident-status" class="text-left py-3 px-6 uppercase font-semibold text-sm hover:cursor-pointer">
-          <span>Status</span>
+          <div class='table-header'>
+            <%= sort_indicator if params[:column] == "state" %>
+            <%= sort_link(column: "state", label: "Status") %>
+          </div>
         </th>
         <th id="incident-resolved-at" class="text-left py-3 px-6 uppercase font-semibold text-sm hover:cursor-pointer">
-          <span>Resolved At</span>
+          <div class='table-header'>
+            <%= sort_indicator if params[:column] == "resolved_at" %>
+            <%= sort_link(column: "resolved_at", label: "Resolved At") %>
+          </div>
         </th>
         <th id="incident-description" class="text-left py-3 px-6 uppercase font-semibold text-sm hover:cursor-pointer">
-          <span>Description</span>
+          <div class='table-header'>
+            <%= sort_indicator if params[:column] == "description" %>
+            <%= sort_link(column: "description", label: "Description") %>
+          </div>
         </th>
       </tr>
     </thead>
@@ -32,4 +47,4 @@
       <% end %>
     </tbody>
   </table>
-</div>
+<% end %>

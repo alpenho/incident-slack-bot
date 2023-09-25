@@ -22,6 +22,7 @@ class IncidentsController < ApplicationController
   # POST /incidents or /incidents.json
   def create
     @incident = Incident.new(incident_params)
+    @incident.slack_channel_id = 'C05TCV5R740'
 
     respond_to do |format|
       if @incident.save
@@ -55,6 +56,11 @@ class IncidentsController < ApplicationController
       format.html { redirect_to incidents_url, notice: "Incident was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def list
+    incidents = Incident.order("#{params[:column]} #{params[:sort]}")
+    render(partial: 'incidents', locals: { incidents: incidents })
   end
 
   private
