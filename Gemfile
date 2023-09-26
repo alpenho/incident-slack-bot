@@ -51,6 +51,7 @@ gem "bootsnap", require: false
 gem 'slack-ruby-client'
 gem 'sidekiq'
 gem 'tailwindcss-rails'
+gem 'slack-ruby-block-kit'
 
 group :development, :test do
   gem 'pry-rails', '~> 0.3.4'

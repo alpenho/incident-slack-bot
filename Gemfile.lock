@@ -194,6 +194,8 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.14.0)
+    slack-ruby-block-kit (0.23.0)
+      zeitwerk (~> 2.6)
     slack-ruby-client (2.2.0)
       faraday (>= 2.0)
       faraday-mashify
@@ -246,6 +248,7 @@ DEPENDENCIES
   rails (~> 7.0.8)
   selenium-webdriver
   sidekiq
+  slack-ruby-block-kit
   slack-ruby-client
   sprockets-rails
   stimulus-rails

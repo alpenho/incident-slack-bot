@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   # root "articles#index"
   root 'incidents#index'
   post '/rootly', :to => 'rootlies#rootly'
+  post '/rootly-interactive', :to => 'rootlies#rootly_interactive'
   mount Sidekiq::Web => '/sidekiq'
 end

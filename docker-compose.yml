@@ -29,6 +29,7 @@ services:
       - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
       - SLACK_TOKEN=${SLACK_TOKEN}
       - SLACK_OAUTH_TOKEN=${SLACK_OAUTH_TOKEN}
+      - REDIS_URL=${REDIS_URL}
     volumes:
       - app-storage:/rails/storage
     depends_on:

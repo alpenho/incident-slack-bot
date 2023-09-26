@@ -1,10 +1,12 @@
 class RootliesController < ApplicationController
   include RootliesHelper
+  include SlackModalHelper
 
   skip_before_action :verify_authenticity_token
 
   DECLARE_REGEX = /^declare(\s+|)/
   RESOLVE_REGEX = /^resolve(\s+|)/
+  DECLARE = 'declare'
 
   # POST /rootly
   def rootly
@@ -25,6 +27,16 @@ class RootliesController < ApplicationController
   rescue => e
     payload[:text] = e.message
     render json: payload, status: 200
+  end
+
+  def rootly_interactive
+    payload = JSON.parse(request.params['payload'])
+    if payload['type'] == 'shortcut' && payload['callback_id'] == DECLARE
+      show_modal_declare(payload['trigger_id'])
+    elsif payload['type'] == 'view_submission' && payload['view']['callback_id'] == 'declare-modal-form'
+      create_incident!(payload['user']['id'], payload['view']['state']['values'])
+    end
+    render json: {}, status: 200
   end
 
   private
