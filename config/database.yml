@@ -11,16 +11,16 @@ development:
   <<: *default
   database: incident_slack_bot_development
   username: <%= ENV['POSTGRES_USER'] %>
-  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  password: <%= Rails.application.credentials.incident_slack[:postgres_password] %>
 
 test:
   <<: *default
   database: incident_slack_bot_test
   username: <%= ENV['POSTGRES_USER'] %>
-  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  password: <%= Rails.application.credentials.incident_slack[:postgres_password] %>
 
 production:
   <<: *default
   database: <%= ENV['POSTGRES_DB'] %>
   username: <%= ENV['POSTGRES_USER'] %>
-  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  password: <%= Rails.application.credentials.incident_slack[:postgres_password] %>
