@@ -23,7 +23,7 @@ module SlackModalHelper
         )
       end
 
-      b.input(label: 'Severity', block_id: SEVERITY_BLOCK_INPUT) do |i|
+      b.input(label: 'Severity', block_id: SEVERITY_BLOCK_INPUT, optional: true) do |i|
         i.static_select(
           action_id: 'severity_input',
           placeholder: 'Select severity'
@@ -34,7 +34,7 @@ module SlackModalHelper
         end
       end
 
-      b.input(label: 'Description', block_id: DESCRIPTION_BLOCK_INPUT) do |i|
+      b.input(label: 'Description', block_id: DESCRIPTION_BLOCK_INPUT, optional: true) do |i|
         i.plain_text_input(
           action_id: DESCRIPTION_INPUT,
           placeholder: 'Describe the detail of incident',
